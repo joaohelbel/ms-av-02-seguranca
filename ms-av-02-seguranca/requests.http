@@ -1,0 +1,36 @@
+### Login válido -> 200
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{ "username": "joao", "senha": "123456" }
+
+### Login inválido -> 401 (na 2ª falha o usuário é bloqueado)
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{ "username": "maria", "senha": "errada" }
+
+### Trocar senha (público)
+PUT http://localhost:8080/trocarsenha/bianca
+Content-Type: application/json
+
+{ "atual": "123456", "nova": "nova123" }
+
+### Cadastrar usuário (ROLE_MANUTENCAO)
+POST http://localhost:8080/
+Authorization: Basic manutencao manut123
+Content-Type: application/json
+
+{ "username": "carlos", "senha": "senha123" }
+
+### Listar usuários (ROLE_MANUTENCAO)
+GET http://localhost:8080/
+Authorization: Basic manutencao manut123
+
+### Desbloquear usuário (ROLE_ADMIN)
+PUT http://localhost:8080/unlock/maria
+Authorization: Basic admin admin123
+
+### Admin tentando listar -> 403 (não tem ROLE_MANUTENCAO)
+GET http://localhost:8080/
+Authorization: Basic admin admin123
